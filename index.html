@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Messaging Platform & RecallAI Demo</title>
+    <script>
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+            fetch('/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message }),
+            })
+            .then(response => response.json())
+            .then(data => console.log(data));  // You can handle the response as needed
+        }
+
+        function getMessages() {
+            fetch('/get_messages')
+            .then(response => response.json())
+            .then(data => console.log(data.messages));  // You can handle the messages as needed
+        }
+
+        function recallMessage() {
+            const message = document.getElementById('recallInput').value;
+            fetch('/recall_message', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message }),
+            })
+            .then(response => response.json())
+            .then(data => console.log(data));  // You can handle the response as needed
+        }
+
+        function transcribeMeeting() {
+            fetch('/transcribe_meeting')
+            .then(response => response.json())
+            .then(data => console.log(data.transcribed_parts));  // You can handle the transcribed parts as needed
+        }
+    </script>
+</head>
+<body>
+    <h1>Messaging Platform & RecallAI Demo</h1>
+    <input type="text" id="messageInput" placeholder="Type your message">
+    <button onclick="sendMessage()">Send Message</button>
+    <button onclick="getMessages()">Get Messages</button>
+
+    <h2>Recall a Message:</h2>
+    <input type="text" id="recallInput" placeholder="Enter message to recall">
+    <button onclick="recallMessage()">Recall Message</button>
+
+    <h2>Transcribe Meeting:</h2>
+    <button onclick="transcribeMeeting()">Transcribe Meeting</button>
+</body>
+</html>
+
